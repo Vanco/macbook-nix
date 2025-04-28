@@ -8,6 +8,8 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./input-method.nix
+      ./desktop.nix
     ];
 
   # Bootloader.
@@ -16,7 +18,7 @@
 
   # for macbook facetime camera
   hardware.facetimehd.enable = true;
-  
+
   networking.hostName = "nixos"; # Define your hostname.
   #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   #networking.wireless.userControlled.enable = true;
@@ -46,62 +48,6 @@
     LC_TIME = "zh_CN.UTF-8";
   };
 
-  i18n.inputMethod = {
-    enable = true;
-    # 如果用 fcitx5
-    type = "fcitx5";
-    fcitx5.addons = with pkgs; [
-       fcitx5-chinese-addons
-       fcitx5-rime
-       fcitx5-gtk
-       fcitx5-nord
-       libsForQt5.fcitx5-qt
-    ];
-    fcitx5.waylandFrontend = true;
-
-    # 我现在用 ibus
-    #type = "ibus";
-    #ibus.engines = with pkgs.ibus-engines; [
-    #  rime
-    #];
-  };
-
-  
-  fonts = {
-    packages = with pkgs; [
-      noto-fonts-color-emoji
-      noto-fonts-cjk-sans
-      noto-fonts-cjk-serif
-      #fira-code-nerdfont
-      nerd-fonts.noto
-      nerd-fonts.jetbrains-mono
-    ];
-  
-
-  # 简单配置一下 fontconfig 字体顺序，以免 fallback 到不想要的字体
-  fontconfig = {
-      defaultFonts = {
-        emoji = [ "Noto Color Emoji" ];
-        monospace = [
-          "JetBrainsMono Nerd Font Mono"
-          "Noto Sans Mono CJK SC"
-          "DejaVu Sans Mono"
-        ];
-        sansSerif = [
-          "Noto Sans"
-          "Noto Sans CJK SC"
-          "DejaVu Sans"
-        ];
-        serif = [
-          "Nato Serif"
-          "Noto Serif CJK SC"
-          "DejaVu Serif"
-        ];
-      };
-    };
-
-  };
-
   # Enable the X11 windowing system.
   #services.xserver.enable = true;
   #services.xserver.dpi = 227;
@@ -109,8 +55,8 @@
   # Enable the Pantheon Desktop Environment.
   #services.displayManager.sddm.enable = true;
   #services.displayManager.sddm.wayland.enable = true;
-  services.displayManager.cosmic-greeter.enable = true;
-  services.desktopManager.cosmic.enable = true;
+  # services.displayManager.cosmic-greeter.enable = true;
+  # services.desktopManager.cosmic.enable = true;
   #services.desktopManager.cosmic.xwayland.enable = false;
   #services.desktopManager.plasma6.enable = true;
   #services.desktopManager.lomiri.enable = true;
@@ -120,7 +66,7 @@
   #services.xserver.desktopManager.budgie.enable = true;
   #services.pantheon.apps.enable = false;
   #services.desktopManager.plasma6.enableQt5Integration = false;
-  
+
   # Configure keymap in X11
   #services.xserver.xkb = {
   #  layout = "us";
@@ -150,7 +96,7 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  # Enable the gnome-keyring secrets vault. 
+  # Enable the gnome-keyring secrets vault.
   # Will be exposed through DBus to programs willing to store secrets.
   services.gnome.gnome-keyring.enable = true;
 
@@ -203,18 +149,18 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-  
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim git dig wget 
+    vim git dig wget
     nixd
     starship
     ghostty
     neofetch htop
-    wlroots wl-clipboard
-    #wofi waybar hyprpaper mako grim slurp swappy cliphist 
-    #blueman 
+    # wlroots wl-clipboard
+    #wofi waybar hyprpaper mako grim slurp swappy cliphist
+    #blueman
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
