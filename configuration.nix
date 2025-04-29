@@ -153,7 +153,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim git dig wget
+    vim git dig wget git-credential-manager
     nixd
     starship
     ghostty
