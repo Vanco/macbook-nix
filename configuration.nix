@@ -155,7 +155,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     vim git dig wget git-credential-manager
-    nixd
+    nixd dex inetutils
     starship
     ghostty
     neofetch htop
